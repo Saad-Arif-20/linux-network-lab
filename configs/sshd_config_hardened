@@ -1,0 +1,25 @@
+# Hardened SSH Configuration
+# /etc/ssh/sshd_config subset
+
+# 1. Network Settings
+Port 2222                  # Change default port to avoid script kiddies
+Protocol 2
+AddressFamily inet         # IPv4 only
+
+# 2. Authentication
+PermitRootLogin no         # CRITICAL: Disable root login
+MaxAuthTries 3             # Limit retry attempts
+PubkeyAuthentication yes   # Force Key-based auth
+PasswordAuthentication no  # Disable passwords
+PermitEmptyPasswords no
+
+# 3. Access Control
+AllowUsers sysadmin deploy # Only allow specific users
+
+# 4. Connection Settings
+ClientAliveInterval 300    # Timeout idle sessions (5 mins)
+ClientAliveCountMax 0      # Disconnect after timeout
+LoginGraceTime 30          # Disconnect stuck logins fast
+
+# 5. Banner
+Banner /etc/issue.net      # Show legal warning banner
